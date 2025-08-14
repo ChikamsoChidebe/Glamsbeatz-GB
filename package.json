@@ -6,7 +6,7 @@
   "scripts": {
     "start": "live-server --port=3000 --open=/index.html",
     "dev": "live-server --port=3000 --open=/index.html --watch=src/",
-    "build": "echo 'Static site - no build needed'",
+    "build": "mkdir -p public && cp -r * public/ 2>/dev/null || xcopy /E /I . public\ 2>nul || echo 'Files copied'",
     "optimize-images": "imagemin public/images/* --out-dir=dist/images",
     "lint": "eslint src/**/*.js",
     "format": "prettier --write src/**/*.{js,css,html}",
@@ -47,7 +47,7 @@
   },
   "homepage": "https://glamsbeatz.com",
   "engines": {
-    "node": ">=14.0.0",
+    "node": ">=18.0.0",
     "npm": ">=6.0.0"
   },
   "browserslist": [

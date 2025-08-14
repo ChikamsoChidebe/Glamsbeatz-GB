@@ -183,14 +183,17 @@ class GlamsbeatzApp {
         const loadingScreen = document.getElementById('loading-screen');
         
         if (loadingScreen) {
-            window.addEventListener('load', () => {
+            // Hide loading screen immediately when DOM is ready
+            const hideLoading = () => {
+                loadingScreen.style.opacity = '0';
                 setTimeout(() => {
-                    loadingScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        loadingScreen.style.display = 'none';
-                    }, 500);
-                }, 1000);
-            });
+                    loadingScreen.style.display = 'none';
+                }, 300);
+            };
+            
+            // Hide on load or after 2 seconds max
+            window.addEventListener('load', hideLoading);
+            setTimeout(hideLoading, 2000);
         }
     }
 
@@ -243,8 +246,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 products.push(...supabaseProducts);
             }
         } catch (error) {
-            console.warn('Failed to load from Supabase:', error);
+            console.warn('Failed to load from Supabase, using static data:', error);
         }
+    }
+    
+    // Ensure loading screen is hidden
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen) {
+        loadingScreen.style.display = 'none';
     }
 });
 

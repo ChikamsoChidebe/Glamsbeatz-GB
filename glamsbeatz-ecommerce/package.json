@@ -1,0 +1,17 @@
+{
+  "name": "glamsbeatz-ecommerce",
+  "version": "1.0.0",
+  "description": "Premium e-commerce platform for shoes and bags",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'Build completed successfully'",
+    "start": "echo 'Starting server'",
+    "dev": "echo 'Development server'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": ["ecommerce", "shoes", "bags", "fashion"],
+  "author": "Glamsbeatz",
+  "license": "MIT"
+}

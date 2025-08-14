@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glamsbeatz Admin - Product Management</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; background: #f5f5f5; }
+        .admin-header { background: #2c3e50; color: white; padding: 1rem; }
+        .admin-container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .admin-nav { background: white; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .nav-tabs { display: flex; gap: 1rem; }
+        .nav-tab { padding: 0.75rem 1.5rem; background: #ecf0f1; border: none; border-radius: 5px; cursor: pointer; }
+        .nav-tab.active { background: #3498db; color: white; }
+        .admin-section { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: none; }
+        .admin-section.active { display: block; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; font-weight: bold; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.75rem; border: 2px solid #ddd; border-radius: 5px; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .btn { padding: 0.75rem 1.5rem; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .btn-primary { background: #3498db; color: white; }
+        .btn-success { background: #27ae60; color: white; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .products-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .products-table th, .products-table td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
+        .products-table th { background: #f8f9fa; }
+        .product-image { width: 50px; height: 50px; object-fit: cover; border-radius: 5px; }
+        .actions { display: flex; gap: 0.5rem; }
+        .tag-input { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+        .tag { background: #3498db; color: white; padding: 0.25rem 0.5rem; border-radius: 15px; font-size: 0.8rem; }
+        .image-preview { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+        .image-preview img { width: 80px; height: 80px; object-fit: cover; border-radius: 5px; }
+        .image-upload-area { border: 2px dashed #ddd; border-radius: 8px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+        .image-upload-area:hover { border-color: #3498db; background: #f8f9fa; }
+        .image-upload-area.dragover { border-color: #27ae60; background: #e8f5e8; }
+        .upload-placeholder i { font-size: 3rem; color: #bdc3c7; margin-bottom: 1rem; }
+        .upload-placeholder p { margin: 0.5rem 0; color: #7f8c8d; }
+        .upload-note { font-size: 0.9rem; color: #95a5a6; }
+        .image-item { position: relative; display: inline-block; }
+        .image-item .remove-btn { position: absolute; top: -5px; right: -5px; background: #e74c3c; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <header class="admin-header">
+        <h1><i class="fas fa-cog"></i> Glamsbeatz Admin Panel</h1>
+    </header>
+
+    <div class="admin-container">
+        <nav class="admin-nav">
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="showSection('add-product')">Add Product</button>
+                <button class="nav-tab" onclick="showSection('manage-products')">Manage Products</button>
+                <button class="nav-tab" onclick="showSection('statistics')">Statistics</button>
+            </div>
+        </nav>
+
+        <!-- Add Product Section -->
+        <section id="add-product" class="admin-section active">
+            <h2>Add New Product</h2>
+            <form id="product-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="product-name">Product Name</label>
+                        <input type="text" id="product-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-brand">Brand</label>
+                        <input type="text" id="product-brand" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-type">Type</label>
+                        <select id="product-type" required>
+                            <option value="">Select Type</option>
+                            <option value="shoes">Shoes</option>
+                            <option value="bags">Bags</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-category">Category</label>
+                        <select id="product-category" required>
+                            <option value="">Select Category</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-gender">Gender</label>
+                        <select id="product-gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="men">Men</option>
+                            <option value="women">Women</option>
+                            <option value="unisex">Unisex</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-rating">Rating</label>
+                        <input type="number" id="product-rating" min="1" max="5" step="0.1" value="4.5">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="product-description">Description</label>
+                        <textarea id="product-description" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="product-features">Features (one per line)</label>
+                        <textarea id="product-features" rows="4"></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="product-images">Product Images</label>
+                        <div class="image-upload-area" id="image-upload-area">
+                            <div class="upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drag & drop images here or click to browse</p>
+                                <p class="upload-note">Supports: JPG, JPEG, PNG, WebP</p>
+                            </div>
+                            <input type="file" id="product-images" multiple accept=".jpg,.jpeg,.png,.webp" style="display: none;">
+                        </div>
+                        <div id="image-preview" class="image-preview"></div>
+                        <textarea id="product-image-urls" rows="3" placeholder="Or paste image URLs (one per line)" style="margin-top: 10px;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="product-colors">Colors (comma separated)</label>
+                        <input type="text" id="product-colors" placeholder="Black, White, Brown">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-sizes">Sizes (comma separated)</label>
+                        <input type="text" id="product-sizes" placeholder="8, 9, 10, 11">
+                    </div>
+                    <div class="form-group">
+                        <label for="product-tags">Tags (comma separated)</label>
+                        <input type="text" id="product-tags" placeholder="casual, leather, premium">
+                    </div>
+                    <div class="form-group">
+                        <label for="review-count">Review Count</label>
+                        <input type="number" id="review-count" min="0" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="is-new"> New Product
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="is-featured"> Featured Product
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="is-popular"> Popular Product
+                        </label>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-success">Add Product</button>
+                <button type="button" class="btn btn-primary" onclick="clearForm()">Clear Form</button>
+            </form>
+        </section>
+
+        <!-- Manage Products Section -->
+        <section id="manage-products" class="admin-section">
+            <h2>Manage Products</h2>
+            <div style="margin-bottom: 1rem;">
+                <input type="text" id="search-products" placeholder="Search products..." style="padding: 0.5rem; width: 300px;">
+                <button class="btn btn-primary" onclick="searchProducts()">Search</button>
+                <button class="btn btn-success" onclick="exportProducts()">Export JSON</button>
+            </div>
+            <table class="products-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Brand</th>
+                        <th>Type</th>
+                        <th>Category</th>
+                        <th>Rating</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="products-table-body">
+                    <!-- Products will be loaded here -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Statistics Section -->
+        <section id="statistics" class="admin-section">
+            <h2>Statistics</h2>
+            <div class="stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                <div class="stat-card" style="background: white; padding: 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h3 style="color: #3498db; font-size: 2rem; margin-bottom: 0.5rem;" id="total-products">0</h3>
+                    <p>Total Products</p>
+                </div>
+                <div class="stat-card" style="background: white; padding: 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h3 style="color: #27ae60; font-size: 2rem; margin-bottom: 0.5rem;" id="total-shoes">0</h3>
+                    <p>Total Shoes</p>
+                </div>
+                <div class="stat-card" style="background: white; padding: 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h3 style="color: #e74c3c; font-size: 2rem; margin-bottom: 0.5rem;" id="total-bags">0</h3>
+                    <p>Total Bags</p>
+                </div>
+                <div class="stat-card" style="background: white; padding: 1.5rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <h3 style="color: #f39c12; font-size: 2rem; margin-bottom: 0.5rem;" id="featured-products">0</h3>
+                    <p>Featured Products</p>
+                </div>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+                <a href="products.html" class="btn btn-primary">View All Products Page</a>
+                <a href="index.html" class="btn btn-success">View Homepage</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Prevent duplicate declarations
+        if (typeof CONFIG === 'undefined') {
+            const CONFIG = {
+                products: {
+                    categories: {
+                        shoes: ['formal', 'sneakers', 'casual', 'athletic', 'boots', 'sandals', 'heels', 'flats'],
+                        bags: ['handbags', 'backpacks', 'clutches', 'tote', 'crossbody', 'wallets', 'briefcase', 'messenger', 'laptop', 'sports', 'satchel', 'travel']
+                    }
+                }
+            };
+            window.CONFIG = CONFIG;
+        }
+    </script>
+    <script src="src/utils/supabase.js"></script>
+    <script>
+        // Admin functionality
+        window.currentProducts = window.currentProducts || [];
+        
+        // Show section function
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+            
+            // Load data for specific sections
+            if (sectionId === 'manage-products') {
+                loadProductsTable();
+            } else if (sectionId === 'statistics') {
+                loadStatistics();
+            }
+        }
+        
+        // Initialize admin panel
+        document.addEventListener('DOMContentLoaded', async function() {
+            await initializeAdmin();
+            setupCategoryDropdown();
+            setupImagePreview();
+            setupProductForm();
+            updateStatistics();
+        });
+        
+        // Initialize admin with Supabase
+        async function initializeAdmin() {
+            try {
+                window.currentProducts = await productManager.loadProducts();
+                console.log('Loaded products from Supabase:', window.currentProducts.length);
+            } catch (error) {
+                console.error('Failed to load products:', error);
+                window.currentProducts = products; // Fallback to static data
+            }
+        }
+        
+        // Setup category dropdown based on type
+        function setupCategoryDropdown() {
+            const typeSelect = document.getElementById('product-type');
+            const categorySelect = document.getElementById('product-category');
+            
+            typeSelect.addEventListener('change', function() {
+                const type = this.value;
+                categorySelect.innerHTML = '<option value="">Select Category</option>';
+                
+                const categories = {
+                    shoes: ['formal', 'sneakers', 'casual', 'athletic', 'boots', 'sandals', 'heels', 'flats'],
+                    bags: ['handbags', 'backpacks', 'clutches', 'tote', 'crossbody', 'wallets', 'briefcase', 'messenger', 'laptop', 'sports', 'satchel', 'travel']
+                };
+                
+                if (type && categories[type]) {
+                    categories[type].forEach(category => {
+                        const option = document.createElement('option');
+                        option.value = category;
+                        option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+                        categorySelect.appendChild(option);
+                    });
+                }
+            });
+        }
+        
+        // Setup image upload and preview
+        function setupImagePreview() {
+            const uploadArea = document.getElementById('image-upload-area');
+            const fileInput = document.getElementById('product-images');
+            const urlInput = document.getElementById('product-image-urls');
+            const preview = document.getElementById('image-preview');
+            let uploadedFiles = [];
+            
+            // Click to browse
+            uploadArea.addEventListener('click', () => fileInput.click());
+            
+            // Drag and drop events
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = Array.from(e.dataTransfer.files).filter(file => 
+                    file.type.match(/^image\/(jpeg|jpg|png|webp)$/i)
+                );
+                handleFiles(files);
+            });
+            
+            // File input change
+            fileInput.addEventListener('change', (e) => {
+                handleFiles(Array.from(e.target.files));
+            });
+            
+            // URL input change
+            urlInput.addEventListener('input', function() {
+                const urls = this.value.split('\n').filter(url => url.trim());
+                updatePreview();
+            });
+            
+            function handleFiles(files) {
+                files.forEach(file => {
+                    if (file.type.match(/^image\/(jpeg|jpg|png|webp)$/i)) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            uploadedFiles.push({
+                                name: file.name,
+                                data: e.target.result,
+                                type: 'file'
+                            });
+                            updatePreview();
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+            
+            function updatePreview() {
+                preview.innerHTML = '';
+                
+                // Show uploaded files
+                uploadedFiles.forEach((file, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'image-item';
+                    item.innerHTML = `
+                        <img src="${file.data}" alt="${file.name}">
+                        <button type="button" class="remove-btn" onclick="removeImage(${index}, 'file')">&times;</button>
+                    `;
+                    preview.appendChild(item);
+                });
+                
+                // Show URL images
+                const urls = urlInput.value.split('\n').filter(url => url.trim());
+                urls.forEach((url, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'image-item';
+                    item.innerHTML = `
+                        <img src="${url.trim()}" alt="URL Image" onerror="this.src='https://via.placeholder.com/80x80?text=Error'">
+                        <button type="button" class="remove-btn" onclick="removeImage(${index}, 'url')">&times;</button>
+                    `;
+                    preview.appendChild(item);
+                });
+            }
+            
+            // Global function to remove images
+            window.removeImage = function(index, type) {
+                if (type === 'file') {
+                    uploadedFiles.splice(index, 1);
+                } else {
+                    const urls = urlInput.value.split('\n').filter(url => url.trim());
+                    urls.splice(index, 1);
+                    urlInput.value = urls.join('\n');
+                }
+                updatePreview();
+            };
+            
+            // Get all images for form submission
+            window.getAllImages = function() {
+                const fileImages = uploadedFiles.map(f => f.data);
+                const urlImages = urlInput.value.split('\n').filter(url => url.trim());
+                return [...fileImages, ...urlImages];
+            };
+        }
+        
+        // Setup product form
+        function setupProductForm() {
+            const form = document.getElementById('product-form');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                addProduct();
+            });
+        }
+        
+        // Add new product
+        async function addProduct() {
+            try {
+                const fileInput = document.getElementById('product-images');
+                const files = Array.from(fileInput.files);
+                
+                let imageUrls = [];
+                
+                // Upload files to Supabase if any
+                if (files.length > 0) {
+                    showLoading('Uploading images...');
+                    imageUrls = await productManager.uploadImages(files);
+                }
+                
+                // Add URL images
+                const urlInput = document.getElementById('product-image-urls');
+                const urlImages = urlInput.value.split('\n').filter(url => url.trim());
+                imageUrls = [...imageUrls, ...urlImages];
+                
+                const newProduct = {
+                    name: document.getElementById('product-name').value,
+                    brand: document.getElementById('product-brand').value,
+                    type: document.getElementById('product-type').value,
+                    category: document.getElementById('product-category').value,
+                    gender: document.getElementById('product-gender').value,
+                    images: imageUrls,
+                    description: document.getElementById('product-description').value,
+                    features: document.getElementById('product-features').value.split('\n').filter(f => f.trim()),
+                    colors: document.getElementById('product-colors').value.split(',').map(c => c.trim()).filter(c => c),
+                    sizes: document.getElementById('product-sizes').value.split(',').map(s => s.trim()).filter(s => s),
+                    rating: parseFloat(document.getElementById('product-rating').value),
+                    review_count: parseInt(document.getElementById('review-count').value),
+                    tags: document.getElementById('product-tags').value.split(',').map(t => t.trim()).filter(t => t),
+                    is_new: document.getElementById('is-new').checked,
+                    is_featured: document.getElementById('is-featured').checked,
+                    is_popular: document.getElementById('is-popular').checked
+                };
+                
+                showLoading('Adding product...');
+                await productManager.addProduct(newProduct);
+                window.currentProducts = productManager.products;
+                
+                hideLoading();
+                alert('Product added successfully!');
+                clearForm();
+                updateStatistics();
+            } catch (error) {
+                hideLoading();
+                alert('Error adding product: ' + error.message);
+                console.error('Error adding product:', error);
+            }
+        }
+        
+        // Clear form
+        function clearForm() {
+            document.getElementById('product-form').reset();
+            document.getElementById('image-preview').innerHTML = '';
+            document.getElementById('product-image-urls').value = '';
+            if (window.uploadedFiles) window.uploadedFiles = [];
+        }
+        
+        // Load products table
+        function loadProductsTable() {
+            const tbody = document.getElementById('products-table-body');
+            tbody.innerHTML = '';
+            
+            const products = window.currentProducts || [];
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${product.images[0]}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/50x50?text=No+Image'"></td>
+                    <td>${product.name}</td>
+                    <td>${product.brand}</td>
+                    <td>${product.type}</td>
+                    <td>${product.category}</td>
+                    <td>${product.rating}/5</td>
+                    <td class="actions">
+                        <button class="btn btn-danger" onclick="deleteProduct(${product.id})">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Delete product
+        async function deleteProduct(id) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                try {
+                    showLoading('Deleting product...');
+                    await productManager.deleteProduct(id);
+                    window.currentProducts = productManager.products;
+                    hideLoading();
+                    loadProductsTable();
+                    updateStatistics();
+                    alert('Product deleted successfully!');
+                } catch (error) {
+                    hideLoading();
+                    alert('Error deleting product: ' + error.message);
+                }
+            }
+        }
+        
+        // Search products
+        function searchProducts() {
+            const searchTerm = document.getElementById('search-products').value.toLowerCase();
+            const filteredProducts = currentProducts.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.brand.toLowerCase().includes(searchTerm) ||
+                product.category.toLowerCase().includes(searchTerm)
+            );
+            
+            const tbody = document.getElementById('products-table-body');
+            tbody.innerHTML = '';
+            
+            filteredProducts.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${product.images[0]}" alt="${product.name}" class="product-image" onerror="this.src='https://via.placeholder.com/50x50?text=No+Image'"></td>
+                    <td>${product.name}</td>
+                    <td>${product.brand}</td>
+                    <td>${product.type}</td>
+                    <td>${product.category}</td>
+                    <td>${product.rating}/5</td>
+                    <td class="actions">
+                        <button class="btn btn-danger" onclick="deleteProduct(${product.id})">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Export products
+        function exportProducts() {
+            const dataStr = JSON.stringify(currentProducts, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'glamsbeatz-products.json';
+            link.click();
+        }
+        
+        // Load statistics
+        function loadStatistics() {
+            const products = window.currentProducts || [];
+            document.getElementById('total-products').textContent = products.length;
+            document.getElementById('total-shoes').textContent = products.filter(p => p.type === 'shoes').length;
+            document.getElementById('total-bags').textContent = products.filter(p => p.type === 'bags').length;
+            document.getElementById('featured-products').textContent = products.filter(p => p.is_featured).length;
+        }
+        
+        // Loading helpers
+        function showLoading(message) {
+            const loading = document.createElement('div');
+            loading.id = 'admin-loading';
+            loading.style.cssText = `
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: rgba(0,0,0,0.8); color: white; display: flex;
+                align-items: center; justify-content: center; z-index: 10000;
+                font-size: 1.2rem;
+            `;
+            loading.innerHTML = `<div><i class="fas fa-spinner fa-spin"></i> ${message}</div>`;
+            document.body.appendChild(loading);
+        }
+        
+        function hideLoading() {
+            const loading = document.getElementById('admin-loading');
+            if (loading) loading.remove();
+        }
+    </script>
+</body>
+</html>       <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="products-list">
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Statistics Section -->
+        <section id="statistics" class="admin-section">
+            <h2>Product Statistics</h2>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Total Products</label>
+                    <input type="text" id="total-products" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Total Shoes</label>
+                    <input type="text" id="total-shoes" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Total Bags</label>
+                    <input type="text" id="total-bags" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Featured Products</label>
+                    <input type="text" id="featured-products" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Average Rating</label>
+                    <input type="text" id="average-rating" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Total Reviews</label>
+                    <input type="text" id="total-reviews" readonly>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="src/utils/config.js"></script>
+    <script src="src/data/products.js"></script>
+    <script src="src/utils/helpers.js"></script>
+    <script>
+        let currentProducts = [];
+
+        // Initialize admin panel
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            updateStatistics();
+            setupEventListeners();
+        });
+
+        function showSection(sectionId) {
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+            
+            if (sectionId === 'manage-products') {
+                displayProducts();
+            } else if (sectionId === 'statistics') {
+                updateStatistics();
+            }
+        }
+
+        function setupEventListeners() {
+            // Update categories when type changes
+            document.getElementById('product-type').addEventListener('change', function() {
+                updateCategories(this.value);
+            });
+
+            // Preview images when URLs are entered
+            document.getElementById('product-images').addEventListener('input', function() {
+                previewImages(this.value);
+            });
+
+            // Form submission
+            document.getElementById('product-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                addProduct();
+            });
+        }
+
+        function updateCategories(type) {
+            const categorySelect = document.getElementById('product-category');
+            categorySelect.innerHTML = '<option value="">Select Category</option>';
+            
+            let categories = [];
+            if (type === 'shoes') {
+                categories = ['men', 'women', 'sneakers', 'formal', 'boots', 'sandals'];
+            } else if (type === 'bags') {
+                categories = ['handbags', 'backpacks', 'clutches', 'tote', 'crossbody', 'wallets'];
+            }
+            
+            categories.forEach(cat => {
+                const option = document.createElement('option');
+                option.value = cat;
+                option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+                categorySelect.appendChild(option);
+            });
+        }
+
+        function previewImages(imageUrls) {
+            const preview = document.getElementById('image-preview');
+            preview.innerHTML = '';
+            
+            const urls = imageUrls.split('\n').filter(url => url.trim());
+            urls.forEach(url => {
+                if (url.trim()) {
+                    const img = document.createElement('img');
+                    img.src = url.trim();
+                    img.onerror = () => img.style.border = '2px solid red';
+                    preview.appendChild(img);
+                }
+            });
+        }
+
+        function addProduct() {
+            const formData = {
+                id: 'product-' + Date.now(),
+                name: document.getElementById('product-name').value,
+                brand: document.getElementById('product-brand').value,
+                category: document.getElementById('product-category').value,
+                gender: document.getElementById('product-gender').value,
+                type: document.getElementById('product-type').value,
+                description: document.getElementById('product-description').value,
+                features: document.getElementById('product-features').value.split('\n').filter(f => f.trim()),
+                images: document.getElementById('product-images').value.split('\n').filter(img => img.trim()),
+                colors: document.getElementById('product-colors').value.split(',').map(c => c.trim()).filter(c => c),
+                sizes: document.getElementById('product-sizes').value.split(',').map(s => s.trim()).filter(s => s),
+                rating: parseFloat(document.getElementById('product-rating').value),
+                reviewCount: parseInt(document.getElementById('review-count').value),
+                tags: document.getElementById('product-tags').value.split(',').map(t => t.trim()).filter(t => t),
+                isNew: document.getElementById('is-new').checked,
+                isFeatured: document.getElementById('is-featured').checked,
+                isPopular: document.getElementById('is-popular').checked
+            };
+
+            // Add to products data
+            if (formData.type === 'shoes') {
+                PRODUCTS_DATA.shoes.push(formData);
+            } else {
+                PRODUCTS_DATA.bags.push(formData);
+            }
+
+            // Save to localStorage
+            saveProducts();
+            
+            alert('Product added successfully!');
+            clearForm();
+            updateStatistics();
+        }
+
+        function loadProducts() {
+            const saved = localStorage.getItem('glamsbeatz_products');
+            if (saved) {
+                const savedData = JSON.parse(saved);
+                PRODUCTS_DATA.shoes = savedData.shoes || PRODUCTS_DATA.shoes;
+                PRODUCTS_DATA.bags = savedData.bags || PRODUCTS_DATA.bags;
+            }
+            currentProducts = [...PRODUCTS_DATA.shoes, ...PRODUCTS_DATA.bags];
+        }
+
+        function saveProducts() {
+            localStorage.setItem('glamsbeatz_products', JSON.stringify(PRODUCTS_DATA));
+            currentProducts = [...PRODUCTS_DATA.shoes, ...PRODUCTS_DATA.bags];
+        }
+
+        function displayProducts() {
+            const tbody = document.getElementById('products-list');
+            tbody.innerHTML = '';
+            
+            currentProducts.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${product.images[0] || ''}" class="product-image" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHZpZXdCb3g9IjAgMCA1MCA1MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIiBmaWxsPSIjRjVGNUY1Ii8+CjxwYXRoIGQ9Ik0yNSAyMEMyNyAyMCAyOSAyMiAyOSAyNEMyOSAyNiAyNyAyOCAyNSAyOEMyMyAyOCAyMSAyNiAyMSAyNEMyMSAyMiAyMyAyMCAyNSAyMFoiIGZpbGw9IiNEREREREQiLz4KPC9zdmc+Cg=='"></td>
+                    <td>${product.name}</td>
+                    <td>${product.brand}</td>
+                    <td>${product.type}</td>
+                    <td>${product.category}</td>
+                    <td>${product.rating}</td>
+                    <td class="actions">
+                        <button class="btn btn-primary" onclick="editProduct('${product.id}')">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteProduct('${product.id}')">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function deleteProduct(productId) {
+            if (confirm('Are you sure you want to delete this product?')) {
+                PRODUCTS_DATA.shoes = PRODUCTS_DATA.shoes.filter(p => p.id !== productId);
+                PRODUCTS_DATA.bags = PRODUCTS_DATA.bags.filter(p => p.id !== productId);
+                saveProducts();
+                displayProducts();
+                updateStatistics();
+                alert('Product deleted successfully!');
+            }
+        }
+
+        function editProduct(productId) {
+            const product = currentProducts.find(p => p.id === productId);
+            if (product) {
+                // Fill form with product data
+                document.getElementById('product-name').value = product.name;
+                document.getElementById('product-brand').value = product.brand;
+                document.getElementById('product-type').value = product.type;
+                updateCategories(product.type);
+                setTimeout(() => {
+                    document.getElementById('product-category').value = product.category;
+                }, 100);
+                document.getElementById('product-gender').value = product.gender;
+                document.getElementById('product-rating').value = product.rating;
+                document.getElementById('product-description').value = product.description;
+                document.getElementById('product-features').value = product.features.join('\n');
+                document.getElementById('product-images').value = product.images.join('\n');
+                document.getElementById('product-colors').value = product.colors.join(', ');
+                document.getElementById('product-sizes').value = product.sizes.join(', ');
+                document.getElementById('product-tags').value = product.tags.join(', ');
+                document.getElementById('review-count').value = product.reviewCount;
+                document.getElementById('is-new').checked = product.isNew;
+                document.getElementById('is-featured').checked = product.isFeatured;
+                document.getElementById('is-popular').checked = product.isPopular;
+                
+                // Delete old product and switch to add form
+                deleteProduct(productId);
+                showSection('add-product');
+            }
+        }
+
+        function searchProducts() {
+            const query = document.getElementById('search-products').value.toLowerCase();
+            if (query) {
+                currentProducts = [...PRODUCTS_DATA.shoes, ...PRODUCTS_DATA.bags].filter(product =>
+                    product.name.toLowerCase().includes(query) ||
+                    product.brand.toLowerCase().includes(query) ||
+                    product.category.toLowerCase().includes(query)
+                );
+            } else {
+                currentProducts = [...PRODUCTS_DATA.shoes, ...PRODUCTS_DATA.bags];
+            }
+            displayProducts();
+        }
+
+        function exportProducts() {
+            const dataStr = JSON.stringify(PRODUCTS_DATA, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'glamsbeatz-products.json';
+            link.click();
+        }
+
+        function updateStatistics() {
+            const products = window.currentProducts || [];
+            document.getElementById('total-products').textContent = products.length;
+            document.getElementById('total-shoes').textContent = products.filter(p => p.type === 'shoes').length;
+            document.getElementById('total-bags').textContent = products.filter(p => p.type === 'bags').length;
+            document.getElementById('featured-products').textContent = products.filter(p => p.is_featured).length;
+        }
+
+        function clearForm() {
+            document.getElementById('product-form').reset();
+            document.getElementById('image-preview').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

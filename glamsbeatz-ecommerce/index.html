@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glamsbeatz - Premium Shoes & Bags Collection</title>
+    <link rel="stylesheet" href="src/styles/main.css">
+    <link rel="stylesheet" href="src/styles/responsive.css">
+    <link rel="stylesheet" href="src/styles/animations.css">
+    <link rel="stylesheet" href="src/styles/product-slider.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="description" content="Glamsbeatz - Your premier destination for luxury shoes and designer bags. Contact us on WhatsApp for exclusive pricing.">
+    <meta name="keywords" content="shoes, bags, luxury, fashion, designer, premium, footwear, handbags">
+</head>
+<style>
+    .nav-logo{
+        position: relative;
+        left: -18px;
+    }
+</style>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <h1>GLAMSBEATZ</h1>
+                <div class="loading-spinner"></div>
+            </div>
+            <p>Loading Premium Collection...</p>
+        </div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2>GLAMSBEATZ</h2>
+                    <span class="logo-tagline">Premium Collection</span>
+                </div>
+                
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
+                        <!-- <li class="nav-item dropdown">
+                            <a href="#shoes" class="nav-link">Shoes <i class="fas fa-chevron-down"></i></a>
+                            <div class="dropdown-content">
+                                <a href="#men-shoes">Men's Shoes</a>
+                                <a href="#women-shoes">Women's Shoes</a>
+                                <a href="#sneakers">Sneakers</a>
+                                <a href="#formal-shoes">Formal Shoes</a>
+                                <a href="#boots">Boots</a>
+                                <a href="#sandals">Sandals</a>
+                            </div>
+                        </li> -->
+                        <!-- <li class="nav-item dropdown">
+                            <a href="#bags" class="nav-link">Bags <i class="fas fa-chevron-down"></i></a>
+                            <div class="dropdown-content">
+                                <a href="#handbags">Handbags</a>
+                                <a href="#backpacks">Backpacks</a>
+                                <a href="#clutches">Clutches</a>
+                                <a href="#tote-bags">Tote Bags</a>
+                                <a href="#crossbody">Crossbody</a>
+                                <a href="#wallets">Wallets</a>
+                            </div>
+                        </li> -->
+                        <li class="nav-item"><a href="#collections" class="nav-link">Collections</a></li>
+                        <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                        <!-- <li class="nav-item"><a href="admin.html" class="nav-link">Admin</a></li> -->
+                    </ul>
+                </div>
+
+                <div class="nav-actions">
+                    <div class="search-container">
+                        <input type="text" class="search-input" placeholder="Search products..." id="search-input">
+                        <button class="search-btn"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="nav-icons">
+                        <button class="icon-btn wishlist-btn" id="wishlist-btn" onclick="window.location.href='wishlist.html'">
+                            <i class="fas fa-heart"></i>
+                            <span class="badge" id="wishlist-count">0</span>
+                        </button>
+                        <button class="icon-btn cart-btn" id="cart-btn" onclick="window.location.href='cart.html'">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span class="badge" id="cart-count">0</span>
+                        </button>
+                        <button class="icon-btn products-btn" onclick="window.location.href='products.html'">
+                            <i class="fas fa-th-large"></i>
+                            <span>Products</span>
+                        </button>
+                        <button class="whatsapp-btn" id="whatsapp-btn">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>Get Prices</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-slider">
+            <div class="hero-slide active" style="background-image: url('public/images/product-001.jpeg')">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">Premium Shoes Collection</h1>
+                        <p class="hero-subtitle">Step into luxury with our exclusive footwear range</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="scrollToSection('shoes')">Explore Shoes</button>
+                            <button class="btn btn-outline whatsapp-contact">Contact for Prices</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide" style="background-image: url('public/images/product-021.jpeg')">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">Designer Bags Collection</h1>
+                        <p class="hero-subtitle">Carry elegance with our premium bag selection</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="scrollToSection('bags')">Explore Bags</button>
+                            <button class="btn btn-outline whatsapp-contact">Contact for Prices</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-slide" style="background-image: url('public/images/product-025.jpeg')">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">Exclusive Collections</h1>
+                        <p class="hero-subtitle">Discover our curated selection of premium accessories</p>
+                        <div class="hero-buttons">
+                            <button class="btn btn-primary" onclick="scrollToSection('collections')">View Collections</button>
+                            <button class="btn btn-outline whatsapp-contact">Contact for Prices</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-navigation">
+            <button class="hero-nav-btn prev" id="hero-prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="hero-nav-btn next" id="hero-next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="hero-indicators">
+            <span class="indicator active" data-slide="0"></span>
+            <span class="indicator" data-slide="1"></span>
+            <span class="indicator" data-slide="2"></span>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>Premium Quality</h3>
+                    <p>Handpicked luxury items from top brands worldwide</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>WhatsApp Pricing</h3>
+                    <p>Get exclusive prices directly through WhatsApp</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Personal Service</h3>
+                    <p>We source and deliver personally for you</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Authentic Products</h3>
+                    <p>100% genuine products with authenticity guarantee</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-products" id="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Products</h2>
+                <p class="section-subtitle">Our handpicked premium selection</p>
+            </div>
+            <div class="products-slider-container">
+                <div class="products-slider" id="featured-slider">
+                    <!-- Featured products will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shoes Section -->
+    <section class="products-section" id="shoes">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Premium Shoes Collection</h2>
+                <p class="section-subtitle">Step into luxury with our exclusive footwear range</p>
+                <a href="products.html?filter=shoes" class="view-all-btn">View All Shoes <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products-slider-container">
+                <div class="products-slider" id="shoes-slider">
+                    <!-- Shoes will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bags Section -->
+    <section class="products-section" id="bags">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Designer Bags Collection</h2>
+                <p class="section-subtitle">Carry elegance with our premium bag selection</p>
+                <a href="products.html?filter=bags" class="view-all-btn">View All Bags <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products-slider-container">
+                <div class="products-slider" id="bags-slider">
+                    <!-- Bags will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals Section -->
+    <section class="new-arrivals" id="new-arrivals">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">New Arrivals</h2>
+                <p class="section-subtitle">Latest additions to our premium collection</p>
+                <a href="products.html?filter=new" class="view-all-btn">View All New <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products-slider-container">
+                <div class="products-slider" id="new-slider">
+                    <!-- New products will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Products Section -->
+    <section class="popular-products" id="popular">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Popular Products</h2>
+                <p class="section-subtitle">Customer favorites and bestsellers</p>
+                <a href="products.html?filter=popular" class="view-all-btn">View All Popular <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="products-slider-container">
+                <div class="products-slider" id="popular-slider">
+                    <!-- Popular products will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collections Section -->
+    <section class="collections-section" id="collections">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Exclusive Collections</h2>
+                <p class="section-subtitle">Curated selections for the discerning customer</p>
+            </div>
+            
+            <div class="collections-grid">
+                <div class="collection-card">
+                    <div class="collection-image">
+                        <img src="public/images/product-032.jpeg" alt="Luxury Collection">
+                        <div class="collection-overlay">
+                            <h3>Luxury Collection</h3>
+                            <p>Premium designer pieces</p>
+                            <button class="btn btn-primary whatsapp-contact">Contact for Prices</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="collection-card">
+                    <div class="collection-image">
+                        <img src="public/images/product-002.jpeg" alt="Casual Collection">
+                        <div class="collection-overlay">
+                            <h3>Casual Collection</h3>
+                            <p>Everyday comfort & style</p>
+                            <button class="btn btn-primary whatsapp-contact">Contact for Prices</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="collection-card">
+                    <div class="collection-image">
+                        <img src="public/images/product-008.jpeg" alt="Formal Collection">
+                        <div class="collection-overlay">
+                            <h3>Formal Collection</h3>
+                            <p>Professional elegance</p>
+                            <button class="btn btn-primary whatsapp-contact">Contact for Prices</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="collection-card">
+                    <div class="collection-image">
+                        <img src="public/images/product-005.jpeg" alt="Sport Collection">
+                        <div class="collection-overlay">
+                            <h3>Sport Collection</h3>
+                            <p>Athletic performance</p>
+                            <button class="btn btn-primary whatsapp-contact">Contact for Prices</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>About Glamsbeatz</h2>
+                    <p class="about-intro">Your premier destination for luxury shoes and designer bags. We specialize in sourcing and delivering premium fashion accessories directly to our valued customers.</p>
+                    
+                    <div class="about-features">
+                        <div class="about-feature">
+                            <i class="fas fa-search"></i>
+                            <div>
+                                <h4>Personal Sourcing</h4>
+                                <p>We personally source each item to ensure authenticity and quality</p>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <i class="fas fa-handshake"></i>
+                            <div>
+                                <h4>Direct Service</h4>
+                                <p>Direct communication through WhatsApp for personalized service</p>
+                            </div>
+                        </div>
+                        <div class="about-feature">
+                            <i class="fas fa-star"></i>
+                            <div>
+                                <h4>Premium Quality</h4>
+                                <p>Only the finest materials and craftsmanship make it to our collection</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-stats">
+                        <div class="stat">
+                            <h3>500+</h3>
+                            <p>Happy Customers</p>
+                        </div>
+                        <div class="stat">
+                            <h3>1000+</h3>
+                            <p>Products Sourced</p>
+                        </div>
+                        <div class="stat">
+                            <h3>50+</h3>
+                            <p>Premium Brands</p>
+                        </div>
+                        <div class="stat">
+                            <h3>24/7</h3>
+                            <p>WhatsApp Support</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="public/images/product-024.jpeg" alt="About Glamsbeatz">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Get In Touch</h2>
+                <p class="section-subtitle">Contact us on WhatsApp for pricing and availability</p>
+            </div>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <h3>WhatsApp</h3>
+                        <p>Get instant pricing and product information</p>
+                        <button class="btn btn-primary whatsapp-contact">Message Us</button>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3>Response Time</h3>
+                        <p>We typically respond within 30 minutes</p>
+                        <span class="contact-detail">Available 24/7</span>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                        <h3>Delivery</h3>
+                        <p>Personal sourcing and delivery service</p>
+                        <span class="contact-detail">Worldwide shipping</span>
+                    </div>
+                </div>
+                
+                <div class="contact-form-container">
+                    <form class="contact-form" id="contact-form">
+                        <h3>Send us a message</h3>
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <input type="hidden" id="admin-email" value="cjtouch444@gmail.com">
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone" placeholder="Your Phone Number">
+                        </div>
+                        <div class="form-group">
+                            <select id="interest" name="interest" required>
+                                <option value="">What are you interested in?</option>
+                                <option value="shoes">Shoes</option>
+                                <option value="bags">Bags</option>
+                                <option value="both">Both Shoes & Bags</option>
+                                <option value="custom">Custom Request</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Tell us what you're looking for..." rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send to WhatsApp</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>GLAMSBEATZ</h3>
+                    <p>Your premier destination for luxury shoes and designer bags. We source and deliver premium fashion accessories directly to you.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link whatsapp-contact"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#shoes">Shoes</a></li>
+                        <li><a href="#bags">Bags</a></li>
+                        <li><a href="#collections">Collections</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Categories</h4>
+                    <ul class="footer-links">
+                        <li><a href="#men-shoes">Men's Shoes</a></li>
+                        <li><a href="#women-shoes">Women's Shoes</a></li>
+                        <li><a href="#handbags">Handbags</a></li>
+                        <li><a href="#backpacks">Backpacks</a></li>
+                        <li><a href="#sneakers">Sneakers</a></li>
+                        <li><a href="#formal-shoes">Formal Shoes</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <div class="contact-info-footer">
+                        <p><i class="fab fa-whatsapp"></i> WhatsApp for Pricing</p>
+                        <p><i class="fas fa-clock"></i> Available 24/7</p>
+                        <p><i class="fas fa-shipping-fast"></i> Worldwide Delivery</p>
+                        <button class="btn btn-primary whatsapp-contact">Contact Us</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Glamsbeatz. All rights reserved. | Premium Shoes & Bags Collection</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div class="modal" id="product-modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div class="modal-body">
+                <div class="product-images">
+                    <div class="main-image">
+                        <img id="modal-main-image" src="" alt="">
+                    </div>
+                    <div class="thumbnail-images" id="modal-thumbnails">
+                        <!-- Thumbnails will be loaded dynamically -->
+                    </div>
+                </div>
+                <div class="product-details">
+                    <h2 id="modal-product-name"></h2>
+                    <p id="modal-product-brand"></p>
+                    <div class="product-rating">
+                        <div class="stars" id="modal-product-rating"></div>
+                        <span class="rating-count" id="modal-rating-count"></span>
+                    </div>
+                    <div class="product-description">
+                        <p id="modal-product-description"></p>
+                    </div>
+                    <div class="product-features" id="modal-product-features">
+                        <!-- Features will be loaded dynamically -->
+                    </div>
+                    <div class="product-sizes" id="modal-product-sizes">
+                        <!-- Sizes will be loaded dynamically -->
+                    </div>
+                    <div class="product-colors" id="modal-product-colors">
+                        <!-- Colors will be loaded dynamically -->
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary whatsapp-contact" id="modal-whatsapp-btn">
+                            <i class="fab fa-whatsapp"></i>
+                            Get Price on WhatsApp
+                        </button>
+                        <button class="btn btn-outline" id="modal-wishlist-btn">
+                            <i class="fas fa-heart"></i>
+                            Add to Wishlist
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h3>Your Selection</h3>
+            <button class="cart-close" id="cart-close">&times;</button>
+        </div>
+        <div class="cart-content" id="cart-content">
+            <p class="cart-empty">Your selection is empty. Add items to contact us for pricing.</p>
+        </div>
+        <div class="cart-footer">
+            <button class="btn btn-primary whatsapp-contact" id="cart-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                Get Prices for Selection
+            </button>
+        </div>
+    </div>
+
+    <!-- Wishlist Sidebar -->
+    <div class="wishlist-sidebar" id="wishlist-sidebar">
+        <div class="wishlist-header">
+            <h3>Your Wishlist</h3>
+            <button class="wishlist-close" id="wishlist-close">&times;</button>
+        </div>
+        <div class="wishlist-content" id="wishlist-content">
+            <p class="wishlist-empty">Your wishlist is empty.</p>
+        </div>
+        <div class="wishlist-footer">
+            <button class="btn btn-primary whatsapp-contact" id="wishlist-whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                Get Prices for Wishlist
+            </button>
+        </div>
+    </div>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- WhatsApp Float Button -->
+    <div class="whatsapp-float" id="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-text">Get Prices</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="src/utils/config.js"></script>
+    <script src="src/utils/supabase.js"></script>
+    <script src="src/data/products.js"></script>
+    <script src="src/utils/helpers.js"></script>
+    <script src="src/components/productCard.js"></script>
+    <script src="src/components/productSlider.js"></script>
+    <script src="src/components/modal.js"></script>
+    <script src="src/components/cart.js"></script>
+    <script src="src/components/wishlist.js"></script>
+    <script src="src/components/search.js"></script>
+    <script src="src/components/filters.js"></script>
+    <script src="src/utils/whatsapp.js"></script>
+    <script src="src/utils/animations.js"></script>
+    <script src="src/utils/main.js"></script>
+</body>
+</html>

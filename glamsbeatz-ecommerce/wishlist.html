@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist - Glamsbeatz</title>
+    <link rel="stylesheet" href="src/styles/main.css">
+    <link rel="stylesheet" href="src/styles/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .wishlist-hero {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 6rem 0 4rem;
+            text-align: center;
+        }
+        .wishlist-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .wishlist-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .wishlist-card:hover {
+            transform: translateY(-5px);
+        }
+        .wishlist-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .wishlist-info {
+            padding: 1.5rem;
+        }
+        .wishlist-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .wishlist-brand {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        .wishlist-details {
+            margin-bottom: 1.5rem;
+        }
+        .wishlist-details p {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .wishlist-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .btn {
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+        }
+        .btn-primary {
+            background: #25d366;
+            color: white;
+        }
+        .btn-secondary {
+            background: #3498db;
+            color: white;
+        }
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        .empty-wishlist {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        .empty-wishlist i {
+            font-size: 4rem;
+            color: #ddd;
+            margin-bottom: 1rem;
+        }
+        .wishlist-summary {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .bulk-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 768px) {
+            .wishlist-grid {
+                grid-template-columns: 1fr;
+            }
+            .bulk-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2><a href="index.html" style="text-decoration: none; color: inherit;">GLAMSBEATZ</a></h2>
+                    <span class="logo-tagline">Premium Collection</span>
+                </div>
+                <div class="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="products.html" class="nav-link">Products</a></li>
+                        <li class="nav-item"><a href="cart.html" class="nav-link">Cart</a></li>
+                        <li class="nav-item"><a href="wishlist.html" class="nav-link active">Wishlist</a></li>
+                    </ul>
+                </div>
+                <div class="nav-actions">
+                    <button class="whatsapp-btn" onclick="contactWhatsApp()">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Get Prices</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="wishlist-hero">
+        <div class="container">
+            <h1>My Wishlist</h1>
+            <p>Your favorite products saved for later</p>
+        </div>
+    </section>
+
+    <div class="wishlist-container">
+        <div id="wishlist-summary" class="wishlist-summary" style="display: none;">
+            <h2>Wishlist Summary</h2>
+            <p id="wishlist-count-text">0 items in your wishlist</p>
+            <div class="bulk-actions">
+                <button class="btn btn-primary" onclick="wishlistToWhatsApp()">
+                    <i class="fab fa-whatsapp"></i> Get Prices for All
+                </button>
+                <button class="btn btn-secondary" onclick="moveAllToCart()">
+                    <i class="fas fa-shopping-cart"></i> Add All to Cart
+                </button>
+                <button class="btn btn-danger" onclick="clearWishlist()">
+                    <i class="fas fa-trash"></i> Clear Wishlist
+                </button>
+            </div>
+        </div>
+        
+        <div id="wishlist-content">
+            <!-- Wishlist items will be loaded here -->
+        </div>
+    </div>
+
+    <script src="src/utils/config.js"></script>
+    <script src="src/data/products.js"></script>
+    <script>
+        function contactWhatsApp(message = '') {
+            const phoneNumber = '2348057882114';
+            const defaultMessage = message || 'Hello! I\'m interested in your products from Glamsbeatz.';
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(defaultMessage)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function loadWishlist() {
+            const wishlist = JSON.parse(localStorage.getItem('glamsbeatz_wishlist') || '[]');
+            const wishlistContent = document.getElementById('wishlist-content');
+            const wishlistSummary = document.getElementById('wishlist-summary');
+            const wishlistCountText = document.getElementById('wishlist-count-text');
+
+            if (wishlist.length === 0) {
+                wishlistSummary.style.display = 'none';
+                wishlistContent.innerHTML = `
+                    <div class="empty-wishlist">
+                        <i class="fas fa-heart"></i>
+                        <h2>Your wishlist is empty</h2>
+                        <p>Save your favorite products to view them here</p>
+                        <a href="products.html" class="btn btn-primary">Browse Products</a>
+                    </div>
+                `;
+                return;
+            }
+
+            wishlistSummary.style.display = 'block';
+            wishlistCountText.textContent = `${wishlist.length} item${wishlist.length > 1 ? 's' : ''} in your wishlist`;
+
+            wishlistContent.innerHTML = `
+                <div class="wishlist-grid">
+                    ${wishlist.map(item => `
+                        <div class="wishlist-card" data-id="${item.id}">
+                            <img src="${item.images[0]}" alt="${item.name}" class="wishlist-image">
+                            <div class="wishlist-info">
+                                <h3 class="wishlist-name">${item.name}</h3>
+                                <p class="wishlist-brand">${item.brand}</p>
+                                <div class="wishlist-details">
+                                    <p><strong>Category:</strong> ${item.category}</p>
+                                    <p><strong>Rating:</strong> ${item.rating}/5 ⭐ (${item.reviewCount} reviews)</p>
+                                    <p><strong>Colors:</strong> ${item.colors.join(', ')}</p>
+                                    <p><strong>Sizes:</strong> ${item.sizes.join(', ')}</p>
+                                </div>
+                                <div class="wishlist-actions">
+                                    <button class="btn btn-primary" onclick="sendProductToWhatsApp(${item.id})">
+                                        <i class="fab fa-whatsapp"></i> Get Price
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="addToCart(${item.id})">
+                                        <i class="fas fa-cart-plus"></i> Add to Cart
+                                    </button>
+                                    <button class="btn btn-danger" onclick="removeFromWishlist(${item.id})">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function sendProductToWhatsApp(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
+            const imageUrl = `${baseUrl}/${product.images[0]}`;
+            
+            const message = `🛍️ *GLAMSBEATZ INQUIRY*\n\nHello! I'm interested in this product from my wishlist:\n\n📦 *Product:* ${product.name}\n🏷️ *Brand:* ${product.brand}\n📂 *Category:* ${product.category.charAt(0).toUpperCase() + product.category.slice(1)}\n⭐ *Rating:* ${product.rating}/5 (${product.reviewCount} reviews)\n🎨 *Colors:* ${product.colors.join(', ')}\n📏 *Sizes:* ${product.sizes.join(', ')}\n\n🖼️ *Product Image:* ${imageUrl}\n\n💬 Could you please provide:\n• Current pricing\n• Availability status\n• Delivery options\n\nThank you!`;
+            
+            contactWhatsApp(message);
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            let cart = JSON.parse(localStorage.getItem('glamsbeatz_cart') || '[]');
+            
+            if (!cart.find(item => item.id === productId)) {
+                cart.push(product);
+                localStorage.setItem('glamsbeatz_cart', JSON.stringify(cart));
+                showNotification('Added to cart!', 'success');
+                updateCartCount();
+            } else {
+                showNotification('Item already in cart', 'info');
+            }
+        }
+
+        function removeFromWishlist(productId) {
+            let wishlist = JSON.parse(localStorage.getItem('glamsbeatz_wishlist') || '[]');
+            wishlist = wishlist.filter(item => item.id !== productId);
+            localStorage.setItem('glamsbeatz_wishlist', JSON.stringify(wishlist));
+            loadWishlist();
+            updateWishlistCount();
+            showNotification('Removed from wishlist', 'info');
+        }
+
+        function clearWishlist() {
+            if (confirm('Are you sure you want to clear your wishlist?')) {
+                localStorage.removeItem('glamsbeatz_wishlist');
+                loadWishlist();
+                updateWishlistCount();
+                showNotification('Wishlist cleared', 'info');
+            }
+        }
+
+        function moveAllToCart() {
+            const wishlist = JSON.parse(localStorage.getItem('glamsbeatz_wishlist') || '[]');
+            let cart = JSON.parse(localStorage.getItem('glamsbeatz_cart') || '[]');
+            
+            let addedCount = 0;
+            wishlist.forEach(item => {
+                if (!cart.find(cartItem => cartItem.id === item.id)) {
+                    cart.push(item);
+                    addedCount++;
+                }
+            });
+            
+            localStorage.setItem('glamsbeatz_cart', JSON.stringify(cart));
+            updateCartCount();
+            showNotification(`Added ${addedCount} items to cart`, 'success');
+        }
+
+        function wishlistToWhatsApp() {
+            const wishlist = JSON.parse(localStorage.getItem('glamsbeatz_wishlist') || '[]');
+            if (wishlist.length === 0) return;
+
+            let message = `❤️ *GLAMSBEATZ WISHLIST INQUIRY*\n\nHello! I'm interested in these ${wishlist.length} products from my wishlist:\n\n`;
+            
+            wishlist.forEach((item, index) => {
+                const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
+                const imageUrl = `${baseUrl}/${item.images[0]}`;
+                
+                message += `${index + 1}. 📦 *${item.name}*\n`;
+                message += `   🏷️ Brand: ${item.brand}\n`;
+                message += `   📂 Category: ${item.category}\n`;
+                message += `   ⭐ Rating: ${item.rating}/5\n`;
+                message += `   🎨 Colors: ${item.colors.join(', ')}\n`;
+                message += `   📏 Sizes: ${item.sizes.join(', ')}\n`;
+                message += `   🖼️ Image: ${imageUrl}\n\n`;
+            });
+
+            message += `💬 Could you please provide:\n• Pricing for all items\n• Availability status\n• Bulk discount options\n• Delivery information\n\nThank you!`;
+
+            contactWhatsApp(message);
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('glamsbeatz_cart') || '[]');
+            const cartCount = document.getElementById('cart-count');
+            if (cartCount) {
+                cartCount.textContent = cart.length;
+            }
+        }
+
+        function updateWishlistCount() {
+            const wishlist = JSON.parse(localStorage.getItem('glamsbeatz_wishlist') || '[]');
+            const wishlistCount = document.getElementById('wishlist-count');
+            if (wishlistCount) {
+                wishlistCount.textContent = wishlist.length;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#27ae60' : type === 'error' ? '#e74c3c' : '#3498db'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadWishlist();
+            updateWishlistCount();
+            updateCartCount();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products - Glamsbeatz Premium Collection</title>
+    <link rel="stylesheet" href="src/styles/main.css">
+    <link rel="stylesheet" href="src/styles/responsive.css">
+    <link rel="stylesheet" href="src/styles/animations.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .products-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 0 4rem;
+            text-align: center;
+        }
+        .products-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .products-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .products-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        .products-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            justify-content: center;
+        }
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 1.5rem;
+        }
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        .product-brand {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .stars {
+            color: #ffd700;
+        }
+        .rating-count {
+            color: #666;
+            font-size: 0.8rem;
+        }
+        .product-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .tag {
+            background: #f0f0f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            color: #666;
+        }
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .btn {
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            flex: 1;
+        }
+        .btn-primary {
+            background: #25d366;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #128c7e;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ddd;
+            color: #666;
+        }
+        .btn-outline:hover {
+            background: #f5f5f5;
+        }
+        .load-more {
+            text-align: center;
+            margin-top: 3rem;
+        }
+        .load-more-btn {
+            padding: 1rem 2rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .load-more-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-2px);
+        }
+        .search-section {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .search-input {
+            padding: 1rem;
+            width: 100%;
+            max-width: 400px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h2><a href="index.html" style="text-decoration: none; color: inherit;">GLAMSBEATZ</a></h2>
+                    <span class="logo-tagline">Premium Collection</span>
+                </div>
+                
+                <div class="nav-menu" id="nav-menu">
+                    <ul class="nav-list">
+                        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                        <li class="nav-item"><a href="products.html" class="nav-link active">Products</a></li>
+                        <li class="nav-item"><a href="cart.html" class="nav-link">Cart</a></li>
+                        <li class="nav-item"><a href="wishlist.html" class="nav-link">Wishlist</a></li>
+                        <li class="nav-item"><a href="index.html#about" class="nav-link">About</a></li>
+                        <li class="nav-item"><a href="index.html#contact" class="nav-link">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-actions">
+                    <button class="whatsapp-btn" onclick="contactWhatsApp()">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Get Prices</span>
+                    </button>
+                </div>
+
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Products Hero -->
+    <section class="products-hero">
+        <div class="container">
+            <h1>All Products</h1>
+            <p>Discover our complete collection of premium shoes and designer bags</p>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <div class="products-container">
+        <!-- Search Section -->
+        <div class="search-section">
+            <input type="text" class="search-input" id="product-search" placeholder="Search products...">
+        </div>
+
+        <!-- Filters -->
+        <div class="products-filters">
+            <button class="filter-btn active" data-filter="all">All Products</button>
+            <button class="filter-btn" data-filter="shoes">Shoes</button>
+            <button class="filter-btn" data-filter="bags">Bags</button>
+            <button class="filter-btn" data-filter="men">Men's</button>
+            <button class="filter-btn" data-filter="women">Women's</button>
+            <button class="filter-btn" data-filter="featured">Featured</button>
+            <button class="filter-btn" data-filter="new">New Arrivals</button>
+            <button class="filter-btn" data-filter="popular">Popular</button>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="all-products-grid">
+            <!-- Products will be loaded here -->
+        </div>
+
+        <!-- Load More -->
+        <div class="load-more">
+            <button class="load-more-btn" id="load-more-all" style="display: none;">Load More Products</button>
+        </div>
+    </div>
+
+    <!-- WhatsApp Float Button -->
+    <div class="whatsapp-float" onclick="contactWhatsApp()">
+        <i class="fab fa-whatsapp"></i>
+        <span class="whatsapp-text">Get Prices</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="src/utils/config.js"></script>
+    <script src="src/utils/supabase.js"></script>
+    <script src="src/data/products.js"></script>
+    <script>
+        // WhatsApp contact function
+        function contactWhatsApp(productName = '') {
+            const phoneNumber = '2348057882114';
+            let message = 'Hello! I\'m interested in your products from Glamsbeatz.';
+            if (productName) {
+                message += ` Specifically, I'd like to know more about: ${productName}`;
+            }
+            const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Enhanced product WhatsApp function
+        function sendProductToWhatsApp(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            
+            const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '');
+            const imageUrl = `${baseUrl}/${product.images[0]}`;
+            
+            const message = `🛍️ *GLAMSBEATZ INQUIRY*
+
+Hello! I'm interested in this product:
+
+📦 *Product:* ${product.name}
+🏷️ *Brand:* ${product.brand}
+📂 *Category:* ${product.category.charAt(0).toUpperCase() + product.category.slice(1)}
+⭐ *Rating:* ${product.rating}/5 (${product.reviewCount} reviews)
+🎨 *Colors:* ${product.colors.join(', ')}
+📏 *Sizes:* ${product.sizes.join(', ')}
+
+🖼️ *Product Image:* ${imageUrl}
+
+💬 Could you please provide:
+• Current pricing
+• Availability status
+• Delivery options
+
+Thank you!`;
+            
+            const whatsappUrl = `https://wa.me/2348057882114?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Cart functionality
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            let cart = JSON.parse(localStorage.getItem('glamsbeatz_cart') || '[]');
+            
+            if (!cart.find(item => item.id === productId)) {
+                cart.push(product);
+                localStorage.setItem('glamsbeatz_cart', JSON.stringify(cart));
+                showNotification('Added to cart!', 'success');
+                updateCartCount();
+            } else {
+                showNotification('Item already in cart', 'info');
+            }
+        }
+
+        // Wishlist functionality
+        function toggleWishlist(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            let wishlist = JSON.parse(localStorage.getItem('glamsbeatz_wishlist') || '[]');
+            const existingIndex = wishlist.findIndex(item => item.id === productId);
+
+            if (existingIndex > -1) {
+                wishlist.splice(existingIndex, 1);
+                showNotification('Removed from wishlist', 'info');
+            } else {
+                wishlist.push(product);
+                showNotification('Added to wishlist!', 'success');
+            }
+
+            localStorage.setItem('glamsbeatz_wishlist', JSON.stringify(wishlist));
+            updateWishlistCount();
+        }
+
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('glamsbeatz_cart') || '[]');
+            const cartCount = document.getElementById('cart-count');
+            if (cartCount) {
+                cartCount.textContent = cart.length;
+            }
+        }
+
+        function updateWishlistCount() {
+            const wishlist = JSON.parse(localStorage.getItem('glamsbeatz_wishlist') || '[]');
+            const wishlistCount = document.getElementById('wishlist-count');
+            if (wishlistCount) {
+                wishlistCount.textContent = wishlist.length;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.textContent = message;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#27ae60' : type === 'error' ? '#e74c3c' : '#3498db'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                z-index: 10000;
+                animation: slideInRight 0.3s ease;
+            `;
+
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    if (document.body.contains(notification)) {
+                        document.body.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Products display variables
+        let currentFilter = 'all';
+        let currentPage = 1;
+        const productsPerPage = 12;
+        let filteredProducts = [];
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', async function() {
+            await initializeProducts();
+            setupFilters();
+            setupSearch();
+            setupMobileMenu();
+            updateCartCount();
+            updateWishlistCount();
+        });
+        
+        // Initialize products from Supabase
+        async function initializeProducts() {
+            try {
+                const supabaseProducts = await productManager.loadProducts();
+                // Update global products array
+                products.length = 0;
+                products.push(...supabaseProducts);
+                console.log('Loaded products from Supabase:', products.length);
+            } catch (error) {
+                console.error('Failed to load from Supabase, using static data:', error);
+            }
+            loadAllProducts();
+        }
+
+        // Load all products
+        function loadAllProducts() {
+            filteredProducts = products;
+            displayProducts();
+        }
+
+        // Display products
+        function displayProducts() {
+            const grid = document.getElementById('all-products-grid');
+            const startIndex = 0;
+            const endIndex = currentPage * productsPerPage;
+            const productsToShow = filteredProducts.slice(startIndex, endIndex);
+
+            if (currentPage === 1) {
+                grid.innerHTML = '';
+            }
+
+            productsToShow.forEach(product => {
+                const productCard = createProductCard(product);
+                grid.appendChild(productCard);
+            });
+
+            // Show/hide load more button
+            const loadMoreBtn = document.getElementById('load-more-all');
+            if (endIndex < filteredProducts.length) {
+                loadMoreBtn.style.display = 'block';
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
+
+        // Create product card
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.onclick = () => sendProductToWhatsApp(product.id);
+
+            const stars = '★'.repeat(Math.floor(product.rating)) + '☆'.repeat(5 - Math.floor(product.rating));
+            
+            card.innerHTML = `
+                <img src="${product.images[0]}" alt="${product.name}" class="product-image" onerror="this.src='public/images/product-001.jpeg'">
+                <div class="product-info">
+                    <h3 class="product-name">${product.name}</h3>
+                    <p class="product-brand">${product.brand}</p>
+                    <div class="product-rating">
+                        <span class="stars">${stars}</span>
+                        <span class="rating-count">(${product.reviewCount})</span>
+                    </div>
+                    <div class="product-tags">
+                        ${product.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="product-actions">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); sendProductToWhatsApp(${product.id})">
+                            <i class="fab fa-whatsapp"></i> Contact on WhatsApp
+                        </button>
+                        <button class="btn btn-secondary" onclick="event.stopPropagation(); addToCart(${product.id})">
+                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                        </button>
+                        <button class="btn btn-outline" onclick="event.stopPropagation(); toggleWishlist(${product.id})">
+                            <i class="fas fa-heart"></i> Wishlist
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // Setup filters
+        function setupFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    currentFilter = this.dataset.filter;
+                    currentPage = 1;
+                    filterProducts();
+                });
+            });
+        }
+
+        // Filter products
+        function filterProducts() {
+            if (currentFilter === 'all') {
+                filteredProducts = products;
+            } else if (currentFilter === 'shoes' || currentFilter === 'bags') {
+                filteredProducts = products.filter(p => p.type === currentFilter);
+            } else if (currentFilter === 'men' || currentFilter === 'women') {
+                filteredProducts = products.filter(p => p.gender === currentFilter);
+            } else if (currentFilter === 'featured') {
+                filteredProducts = products.filter(p => p.isFeatured);
+            } else if (currentFilter === 'new') {
+                filteredProducts = products.filter(p => p.isNew);
+            } else if (currentFilter === 'popular') {
+                filteredProducts = products.filter(p => p.isPopular);
+            }
+            
+            displayProducts();
+        }
+
+        // Setup search
+        function setupSearch() {
+            const searchInput = document.getElementById('product-search');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                if (searchTerm === '') {
+                    filterProducts();
+                } else {
+                    filteredProducts = products.filter(product => 
+                        product.name.toLowerCase().includes(searchTerm) ||
+                        product.brand.toLowerCase().includes(searchTerm) ||
+                        product.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                    );
+                    currentPage = 1;
+                    displayProducts();
+                }
+            });
+        }
+
+        // Load more products
+        document.getElementById('load-more-all').addEventListener('click', function() {
+            currentPage++;
+            displayProducts();
+        });
+
+        // Mobile menu setup
+        function setupMobileMenu() {
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('nav-menu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                });
+            }
+        }
+    </script>
+</body>
+</html>

@@ -4,7 +4,7 @@
   "description": "Premium e-commerce platform for shoes and bags",
   "main": "index.html",
   "scripts": {
-    "build": "echo 'Build complete'",
+    "build": "mkdir public && cp *.html public/ && cp -r src public/ && cp -r images public/ 2>/dev/null || echo 'Done'",
     "start": "echo 'Static site ready'"
   },
   "engines": {

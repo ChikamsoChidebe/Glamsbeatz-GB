@@ -5,7 +5,7 @@
       "destination": "/public/images/$1"
     },
     {
-      "source": "/((?!public|src|images|.*\\.).*)$",
+      "source": "/((?!api|_next|_static|favicon.ico|public).*)",
       "destination": "/index.html"
     }
   ]

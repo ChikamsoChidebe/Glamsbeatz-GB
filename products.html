@@ -395,6 +395,7 @@ Thank you!`;
 
         // Initialize page
         document.addEventListener('DOMContentLoaded', async function() {
+            console.log('Products page loading, products available:', products.length);
             await initializeProducts();
             setupFilters();
             setupSearch();

@@ -1,7 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/((?!public|src|.*\\.).*)$",
+      "source": "/images/(.*)",
+      "destination": "/public/images/$1"
+    },
+    {
+      "source": "/((?!public|src|images|.*\\.).*)$",
       "destination": "/index.html"
     }
   ]

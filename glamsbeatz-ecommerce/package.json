@@ -4,9 +4,8 @@
   "description": "Premium e-commerce platform for shoes and bags",
   "main": "index.html",
   "scripts": {
-    "build": "echo 'Build completed successfully'",
-    "start": "echo 'Starting server'",
-    "dev": "echo 'Development server'"
+    "build": "echo 'Static site - no build needed'",
+    "start": "echo 'Static site ready'"
   },
   "engines": {
     "node": ">=18.0.0"

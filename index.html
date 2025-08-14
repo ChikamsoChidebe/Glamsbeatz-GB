@@ -602,6 +602,23 @@
     </div>
 
     <!-- Scripts -->
+    <script>
+        // Hide loading screen immediately
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                loadingScreen.style.display = 'none';
+            }
+        });
+        
+        // Also hide it immediately if DOM is already loaded
+        if (document.readyState !== 'loading') {
+            const loadingScreen = document.getElementById('loading-screen');
+            if (loadingScreen) {
+                loadingScreen.style.display = 'none';
+            }
+        }
+    </script>
     <script src="src/utils/config.js"></script>
     <script src="src/utils/supabase.js"></script>
     <script src="src/data/products.js"></script>

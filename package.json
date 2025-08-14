@@ -4,7 +4,7 @@
   "description": "Premium e-commerce platform for shoes and bags",
   "main": "index.html",
   "scripts": {
-    "build": "mkdir public && cp *.html public/ && cp -r src public/ && cp -r images public/ 2>/dev/null || echo 'Done'",
+    "build": "mkdir -p public && cp *.html *.md public/ 2>/dev/null; cp -r src public/ 2>/dev/null; cp -r images public/ 2>/dev/null; cp -r glamsbeatz-ecommerce/* public/ 2>/dev/null; echo 'Build complete'",
     "start": "echo 'Static site ready'"
   },
   "engines": {

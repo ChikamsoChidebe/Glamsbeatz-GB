@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Verification - Glamsbeatz</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+        .image-item { text-align: center; border: 1px solid #ddd; padding: 10px; border-radius: 8px; }
+        .image-item img { width: 100%; height: 150px; object-fit: cover; border-radius: 4px; }
+        .loaded { border-color: green; background: #f0fff0; }
+        .error { border-color: red; background: #fff0f0; }
+    </style>
+</head>
+<body>
+    <h1>Glamsbeatz Image Verification</h1>
+    <p>Verifying all 46 distinct product images load correctly...</p>
+    <div id="results"></div>
+    <div class="image-grid" id="imageGrid"></div>
+
+    <script>
+        const totalImages = 46;
+        let loadedCount = 0;
+        let errorCount = 0;
+
+        function updateResults() {
+            document.getElementById('results').innerHTML = `
+                <p><strong>Results:</strong> ${loadedCount} loaded, ${errorCount} errors, ${totalImages - loadedCount - errorCount} pending</p>
+            `;
+        }
+
+        for (let i = 1; i <= totalImages; i++) {
+            const imageNumber = i.toString().padStart(3, '0');
+            const imagePath = `images/product-${imageNumber}.jpeg`;
+            
+            const container = document.createElement('div');
+            container.className = 'image-item';
+            
+            const img = document.createElement('img');
+            img.src = imagePath;
+            img.alt = `Product ${imageNumber}`;
+            
+            const label = document.createElement('p');
+            label.textContent = `product-${imageNumber}.jpeg`;
+            
+            img.onload = function() {
+                container.classList.add('loaded');
+                loadedCount++;
+                updateResults();
+            };
+            
+            img.onerror = function() {
+                container.classList.add('error');
+                label.textContent += ' (ERROR)';
+                errorCount++;
+                updateResults();
+            };
+            
+            container.appendChild(img);
+            container.appendChild(label);
+            document.getElementById('imageGrid').appendChild(container);
+        }
+
+        updateResults();
+    </script>
+</body>
+</html>

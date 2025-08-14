@@ -260,7 +260,6 @@
     <!-- Scripts -->
     <script src="src/utils/config.js"></script>
     <script src="src/utils/supabase.js"></script>
-    <script src="src/utils/imageHandler.js"></script>
     <script src="src/data/products.js"></script>
     <script>
         // WhatsApp contact function
@@ -458,7 +457,7 @@ Thank you!`;
             const stars = '★'.repeat(Math.floor(product.rating)) + '☆'.repeat(5 - Math.floor(product.rating));
             
             card.innerHTML = `
-                <img src="${product.images[0]}" alt="${product.name}" class="product-image" onerror="this.src='images/product-001.jpeg'">
+                <img src="${product.images[0]}" alt="${product.name}" class="product-image">
                 <div class="product-info">
                     <h3 class="product-name">${product.name}</h3>
                     <p class="product-brand">${product.brand}</p>

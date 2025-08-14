@@ -84,8 +84,7 @@ class ProductSlider {
 
         card.innerHTML = `
             ${badgeHTML}
-            <img src=\"${product.images[0]}\" alt=\"${product.name}\" class=\"product-image\" 
-                 onerror=\"this.src='images/product-001.jpeg'\">
+            <img src=\"${product.images[0]}\" alt=\"${product.name}\" class=\"product-image\">
             <div class=\"product-info\">
                 <h3 class=\"product-name\">${product.name}</h3>
                 <p class=\"product-brand\">${product.brand}</p>

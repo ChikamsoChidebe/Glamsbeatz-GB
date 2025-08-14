@@ -1,7 +1,12 @@
 {
+  "functions": {
+    "index.html": {
+      "maxDuration": 10
+    }
+  },
   "rewrites": [
     {
-      "source": "/((?!public|src|.*\\.).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]

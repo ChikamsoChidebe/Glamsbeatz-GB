@@ -1,0 +1,6 @@
+# Static files should be served directly
+/public/* /public/:splat 200
+/src/* /src/:splat 200
+
+# All other routes go to index.html for SPA routing
+/* /index.html 200

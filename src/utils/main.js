@@ -142,9 +142,11 @@ class GlamsbeatzApp {
         const navMenu = document.getElementById('nav-menu');
         
         if (hamburger && navMenu) {
-            hamburger.addEventListener('click', () => {
+            hamburger.addEventListener('click', (e) => {
+                e.stopPropagation();
                 hamburger.classList.toggle('active');
                 navMenu.classList.toggle('active');
+                document.body.style.overflow = navMenu.classList.contains('active') ? 'hidden' : '';
             });
 
             // Close menu when clicking on a link
@@ -153,7 +155,26 @@ class GlamsbeatzApp {
                 link.addEventListener('click', () => {
                     hamburger.classList.remove('active');
                     navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
                 });
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Close menu on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
             });
         }
     }

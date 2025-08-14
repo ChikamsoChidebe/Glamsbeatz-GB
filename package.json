@@ -6,9 +6,7 @@
   "scripts": {
     "start": "live-server --port=3000 --open=/index.html",
     "dev": "live-server --port=3000 --open=/index.html --watch=src/",
-    "build": "npm run minify-css && npm run minify-js",
-    "minify-css": "cleancss -o dist/styles/main.min.css src/styles/main.css src/styles/responsive.css src/styles/animations.css",
-    "minify-js": "uglifyjs src/utils/*.js src/components/*.js -o dist/js/main.min.js",
+    "build": "echo 'Static site - no build needed'",
     "optimize-images": "imagemin public/images/* --out-dir=dist/images",
     "lint": "eslint src/**/*.js",
     "format": "prettier --write src/**/*.{js,css,html}",

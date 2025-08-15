@@ -467,11 +467,12 @@ Thank you!`;
 
             const stars = '★'.repeat(Math.floor(product.rating)) + '☆'.repeat(5 - Math.floor(product.rating));
             
-            // Debug: Log the image path
-            console.log('Product:', product.name, 'Image path:', product.images[0]);
+            // Fix image path - remove public/ prefix
+            const imagePath = product.images[0].replace('public/', '');
+            console.log('Product:', product.name, 'Fixed image path:', imagePath);
             
             card.innerHTML = `
-                <img src="${product.images[0]}" alt="${product.name}" class="product-image" onerror="console.log('Image failed to load:', this.src); this.style.backgroundColor='#f0f0f0'; this.style.display='flex'; this.style.alignItems='center'; this.style.justifyContent='center'; this.innerHTML='<span style=\'color:#666\'>Image not found</span>';">
+                <img src="${imagePath}" alt="${product.name}" class="product-image">
                 <div class="product-info">
                     <h3 class="product-name">${product.name}</h3>
                     <p class="product-brand">${product.brand}</p>

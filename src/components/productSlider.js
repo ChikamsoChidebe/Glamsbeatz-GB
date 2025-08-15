@@ -73,38 +73,38 @@ class ProductSlider {
 
         // Generate badges
         let badgeHTML = '';
-        if (product.isNew) badgeHTML += '<span class=\"product-badge new\">New</span>';
-        else if (product.isFeatured) badgeHTML += '<span class=\"product-badge featured\">Featured</span>';
-        else if (product.isPopular) badgeHTML += '<span class=\"product-badge popular\">Popular</span>';
+        if (product.isNew) badgeHTML += '<span class="product-badge new">New</span>';
+        else if (product.isFeatured) badgeHTML += '<span class="product-badge featured">Featured</span>';
+        else if (product.isPopular) badgeHTML += '<span class="product-badge popular">Popular</span>';
 
         // Generate tags
         const tagsHTML = product.tags.slice(0, 3).map(tag => 
-            `<span class=\"product-tag\">${tag}</span>`
+            `<span class="product-tag">${tag}</span>`
         ).join('');
 
         card.innerHTML = `
             ${badgeHTML}
-            <img src=\"${product.images[0]}\" alt=\"${product.name}\" class=\"product-image\">
-            <div class=\"product-info\">
-                <h3 class=\"product-name\">${product.name}</h3>
-                <p class=\"product-brand\">${product.brand}</p>
-                <div class=\"product-rating\">
-                    <span class=\"stars\">${starsHTML}</span>
-                    <span class=\"rating-count\">(${product.reviewCount})</span>
+            <img src="${product.images[0]}" alt="${product.name}" class="product-image">
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-brand">${product.brand}</p>
+                <div class="product-rating">
+                    <span class="stars">${starsHTML}</span>
+                    <span class="rating-count">(${product.reviewCount})</span>
                 </div>
-                <div class=\"product-tags\">
+                <div class="product-tags">
                     ${tagsHTML}
                 </div>
-                <div class=\"product-actions\">
-                    <button class=\"product-whatsapp-btn\" onclick=\"sendProductToWhatsApp(${product.id})\">
-                        <i class=\"fab fa-whatsapp\"></i>
+                <div class="product-actions">
+                    <button class="product-whatsapp-btn" onclick="sendProductToWhatsApp(${product.id})">
+                        <i class="fab fa-whatsapp"></i>
                         Contact on WhatsApp
                     </button>
-                    <button class=\"product-cart-btn\" onclick=\"addToCart(${product.id})\">
-                        <i class=\"fas fa-shopping-cart\"></i>
+                    <button class="product-cart-btn" onclick="addToCart(${product.id})">
+                        <i class="fas fa-shopping-cart"></i>
                     </button>
-                    <button class=\"product-wishlist-btn\" onclick=\"toggleWishlist(${product.id})\">
-                        <i class=\"fas fa-heart\"></i>
+                    <button class="product-wishlist-btn" onclick="toggleWishlist(${product.id})">
+                        <i class="fas fa-heart"></i>
                     </button>
                 </div>
             </div>
